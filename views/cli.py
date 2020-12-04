@@ -1,18 +1,22 @@
+from typing import List
+
 import controllers.task_list_controller as tlc
 
 
-def cli():
-    task_list = tlc.create_task_list()
+def cli() -> None:
+    task_list: list = tlc.create_task_list()
     while True:
-        line = input()
-        commands = line.split(" ")
-        command = commands[0].upper()
+        line: str = input()
+        commands: List[str] = line.split(" ")
+        command: str = commands[0].upper()
+        task_id: int
+        task: list
         if command == "RT":
-            task_description = " ".join(commands[1:len(commands)])
+            task_description: str = " ".join(commands[1:len(commands)])
             task_id = tlc.register_task(task_list, task_description)
             print(f"Tarefa registada com identificador {task_id}")
         elif command == "LT":
-            tasks = tlc.get_tasks(task_list)
+            tasks: list = tlc.get_tasks(task_list)
             if len(tasks) == 0:
                 print("Sem tarefas registadas.")
             else:
