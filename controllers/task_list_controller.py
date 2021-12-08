@@ -43,9 +43,10 @@ def get_task(task_list, task_id) -> Optional[list]:
     return None
 
 
-def mark_task(task_list, task_id) -> None:
-    task: list = get_task(task_list, task_id)
-    tasks.mark_task(task)
+def mark_task(task_list: list, task_id: int) -> None:
+    task: Optional[list] = get_task(task_list, task_id)
+    if task is not None:
+        tasks.mark_task(task)
 
 
 def delete_task(task_list, task_id) -> None:
