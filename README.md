@@ -1,4 +1,4 @@
-[![Scrutinizer code quality (GitHub/Bitbucket)](https://img.shields.io/scrutinizer/quality/g/UAL-AP/TaskList/main)](https://scrutinizer-ci.com/g/UAL-AP/TaskList/)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/UAL-AP/TaskList/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/UAL-AP/TaskList/?branch=main)
 
 # TaskList
 Projeto exemplo para demonstrar a metodologia de desenvolvimento proposta em AP 2021 2022, UAL.
