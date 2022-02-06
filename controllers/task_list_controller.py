@@ -1,54 +1,42 @@
 from typing import Optional
+import models.tasks as tks
 
-import models.tasks as tasks
+class task_controller:
 
+    # Inicializa a lista de tarefas
+    def init_task_list():
+        tks.task_list = tks.task_list()
 
-def create_task_list() -> list:
-    return [0, []]
+    # Regista uma nova tarefa com a Descrição indicada
+    def task_register(descricao):
+        new_task = tks.task_list.add_task(descricao)
+        return new_task.id
 
+    # Obtém a lista de tarefas
+    def get_tasks_list():
+        return tks.task_list.get_task_list()
 
-def register_task(task_list: list, task_description: str) -> int:
-    task_id: int = new_task_id(task_list)
-    insert_task(task_list, task_id, task_description)
-    return task_id
-
-
-def insert_task(task_list: list, task_id: int, task_description: str) -> None:
-    new_task: list = tasks.create_task(task_description, task_id)
-    task_list[1].append(new_task)
-
-
-def new_task_id(task_list: list) -> int:
-    task_list[0] += 1
-    return task_list[0]
-
-
-def get_tasks(task_list) -> list:
-    return task_list[1]
-
-
-def has_task(task_list: list, task_id: int) -> bool:
-    task: list
-    for task in get_tasks(task_list):
-        if tasks.get_id(task) == task_id:
+    # Marca uma tarefa como completada
+    def mark_task(id) -> None:
+        if task_controller.has_task(id):
+            tks.task_list.mark_task(id)
             return True
-    return False
+        else:
+            return False
+            
+    # Elimina a tarefa indicada
+    def delete_task(id):
+        if task_controller.has_task(id):
+            tks.task_list.remove_task(id)
+            return True
+        else:
+            return False
+
+    # Verifica se existe a tarefa com o id indicado
+    def has_task(task_id_to_check: int) -> bool:
+        for task in tks.task_list.get_task_list():
+            if task.id == task_id_to_check:
+                return True
+        return False
 
 
-def get_task(task_list, task_id) -> Optional[list]:
-    task: list
-    for task in get_tasks(task_list):
-        if tasks.get_id(task) == task_id:
-            return task
-    return None
-
-
-def mark_task(task_list: list, task_id: int) -> None:
-    task: Optional[list] = get_task(task_list, task_id)
-    if task is not None:
-        tasks.mark_task(task)
-
-
-def delete_task(task_list, task_id) -> None:
-    task_list_tasks: list = get_tasks(task_list)
-    task_list_tasks.remove(get_task(task_list, task_id))

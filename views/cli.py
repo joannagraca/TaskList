@@ -1,42 +1,52 @@
 from typing import List
-
 import controllers.task_list_controller as tlc
 
-
 def cli() -> None:
-    task_list: list = tlc.create_task_list()
+    tlc.task_controller.init_task_list()
+    
     while True:
         line: str = input()
         commands: List[str] = line.split(" ")
         command: str = commands[0].upper()
         task_id: int
         task: list
+    
         if command == "RT":
             task_description: str = " ".join(commands[1:len(commands)])
-            task_id = tlc.register_task(task_list, task_description)
+            task_id = tlc.task_controller.task_register(task_description)
             print(f"Tarefa registada com identificador {task_id}")
+    
+    
         elif command == "LT":
-            tasks: list = tlc.get_tasks(task_list)
+            tasks: list = tlc.task_controller.get_tasks_list()
             if len(tasks) == 0:
                 print("Sem tarefas registadas.")
             else:
+                print("Id", "Descrição", "Concluida")
                 for task in tasks:
-                    print(f"{task[0]} [{task[1]}] {task[2]}")
+                    print(task.id, task.descricao, "Sim" if task.concluida else "Não")
+
+    
         elif command == "MT":
             task_id = int(commands[1])
-            if not tlc.has_task(task_list, task_id):
-                print("Tarefa inexistente.")
-            else:
-                tlc.mark_task(task_list, task_id)
+            if tlc.task_controller.mark_task(task_id):
                 print("Tarefa cumprida.")
+            else:
+                print("Tarefa inexistente.")
+                
+    
         elif command == "DT":
             task_id = int(commands[1])
-            if not tlc.has_task(task_list, task_id):
+            if not tlc.task_controller.delete_task(task_id):
                 print("Tarefa inexistente.")
             else:
-                tlc.delete_task(task_list, task_id)
-                print("Tarefa eliminada.")
+                print("Tarefa eliminada com sucesso.")
+
+
         elif command == "Q":
             break
+        
         else:
             print("Instrução inválida.")
+
+        
